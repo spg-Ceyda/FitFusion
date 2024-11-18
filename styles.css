@@ -1,0 +1,38 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f4f8;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.register-container {
+    background: #ffffff;
+    padding: 30px;
+    border: 10px solid black; /* Blauer Rahmen */
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+.login-container {
+    background: #ffffff;
+    padding: 50px;
+    border: 10px solid black; /* Blauer Rahmen */    
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+input[type="text"],
+input[type="email"], 
+input[type="password"]  {
+    margin-bottom: 20px; /* Abstand zwischen den Textfeldern */
+}
+.form-group {
+    display: flex; /* Flexbox aktivieren */
+    align-items: center; /* Vertikale Ausrichtung */
+    justify-content: space-between; /* Platz zwischen Label und Input */
+    margin-bottom: 15px; /* Abstand zwischen Feldern */
+}
