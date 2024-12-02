@@ -1,0 +1,53 @@
+datasource db {
+    provider = "sqlite"
+    url      = "file:./dev.sqlite3"
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+model User {
+    id             String        @id @default(cuid())
+    UserName       String        @unique
+    Email          String        @unique
+    Password       String
+    ProfilePicture String
+    workouts       Workout[]
+    workoutPosts   WorkoutPost[]
+    friends        Follower[]
+}
+
+model WorkoutPost {
+    id          String @id @default(cuid())
+    title       String
+    description String
+    image       String
+    user        User   @relation(fields: [userId], references: [id])
+    userId      String
+}
+
+model Workout {
+    id        String     @id @default(cuid())
+    name      String
+    exercises Exercise[]
+    user      User       @relation(fields: [userId], references: [id])
+    userId    String
+}
+
+model Exercise {
+    id          String    @id @default(cuid())
+    name        String
+    description String
+    sets        Int
+    reps        Int
+    weight      Int
+    workouts    Workout[]
+    workoutId   String
+}
+
+model Follower {
+    id         String @id @default(cuid())
+    follower   User   @relation(fields: [followerId], references: [id])
+    followerId String
+}
