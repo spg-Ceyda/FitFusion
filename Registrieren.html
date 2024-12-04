@@ -1,34 +1,101 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrieren</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div class="register-container">
-        <h1>Registrieren</h1>
-        <form action="/register" method="POST">
-            <div class="form-group">
-                <label for="name">Vorname Nachname:</label>
-                <input type="text" id="name" name="name" placeholder="Dein Name" required>
-            </div>
-            <div class="form-group">
-                <label for="email">E-Mail Adresse:</label>
-                <input type="email" id="email" name="email" placeholder="E-Mail eingeben" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Passwort:</label>
-                <input type="password" id="password" name="password" placeholder="Passwort erstellen" required>
-            </div>
-            <div class="form-group">
-                <label for="confirm-password">Passwort bestätigen:</label>
-                <input type="password" id="confirm-password" name="confirm-password" placeholder="Passwort wiederholen" required>
-            </div>
-            <button type="submit" class="btn">Registrieren</button>
-        </form>
-        
-    </div>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Benutzerregistrierung</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        max-width: 400px;
+        margin: auto;
+      }
+      input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      button {
+        padding: 10px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #218838;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Benutzerregistrierung</h1>
+    <form id="registrationForm">
+      <label for="username">Benutzername:</label>
+      <input type="text" id="username" name="username" required />
+
+      <label for="email">E-Mail:</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="password">Passwort:</label>
+      <input type="password" id="password" name="password" required />
+
+      <label for="profilePicture">Profilbild URL:</label>
+      <input type="text" id="profilePicture" name="profilePicture" required />
+
+      <button type="submit">Registrieren</button>
+    </form>
+
+    <button
+      type="button"
+      class="login-button"
+      onclick="location.href='anmeldung.html'"
+    >
+      Bereits registriert? Anmelden
+    </button>
+
+    <script>
+      const form = document.getElementById("registrationForm");
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault(); // Verhindert das standardmäßige Absenden des Formulars
+
+        const formData = {
+          UserName: form.username.value,
+          Email: form.email.value,
+          Password: form.password.value,
+          ProfilePicture: form.profilePicture.value,
+        };
+
+        try {
+          const response = await fetch("http://localhost:3000/users", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+          });
+
+          const result = await response.json();
+
+          if (response.ok) {
+            form.reset();
+            alert(
+              "Benutzer erfolgreich registriert: " + JSON.stringify(result)
+            );
+          } else {
+            alert("Fehler: " + result.error);
+          }
+        } catch (error) {
+          console.error("Fehler beim Senden der Anfrage:", error);
+        }
+      });
+    </script>
+  </body>
 </html>
