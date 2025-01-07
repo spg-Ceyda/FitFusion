@@ -18,48 +18,49 @@ body {
 
 
 .button-container {
-  display: flex; /* Flexbox-Layout */
-  flex-direction: column; /* Buttons untereinander anordnen */
-  justify-content: center; /* Vertikal zentrieren */
-  align-items: flex-end; /* Buttons nach rechts ausrichten */
-  height: 100vh; /* Höhe des Containers ist 100% der Viewport-Höhe */
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: flex-end; 
+  height: 100vh; 
+  padding-bottom: 100px;
 }
 
 .btn-anmelden {
-  background-color: #007bff; /* Blaue Hintergrundfarbe */
-  color: #fff; /* Weißer Text */
-  border: none; /* Keine Umrandung */
-  padding: 15px 30px; /* Innenabstand: oben und unten 15px, rechts und links 30px */
-  font-size: 16px; /* Schriftgröße */
-  text-transform: uppercase; /* Alle Buchstaben in Großbuchstaben */
-  cursor: pointer; /* Der Cursor wird zur Hand (Zeiger) beim Überfahren des Buttons */
-  margin-bottom: 20px; /* Abstand nach unten */
-  width: 200px; /* Feste Breite des Buttons */
-  text-align: center; /* Text im Button zentrieren */
+  background-color: #b1b1b1; 
+  color: #2b2b2b; 
+  border: none; 
+  padding: 15px 30px; 
+  font-size: 16px; 
+  text-transform: uppercase; 
+  cursor: pointer; 
+  margin-bottom: 20px; 
+  width: 200px; 
+  text-align: center; 
 }
 
 .btn-register {
-  background-color: #007bff; /* Hellgraue Hintergrundfarbe */
-  color: #2b2b2b; /* Dunkelgrauer Text */
-  border: none; /* Keine Umrandung */
-  padding: 15px 30px; /* Innenabstand: oben und unten 15px, rechts und links 30px */
-  font-size: 16px; /* Schriftgröße */
-  text-transform: uppercase; /* Alle Buchstaben in Großbuchstaben */
-  cursor: pointer; /* Der Cursor wird zur Hand (Zeiger) beim Überfahren des Buttons */
-  width: 200px; /* Feste Breite des Buttons */
-  text-align: center; /* Text im Button zentrieren */
+  background-color: #b1b1b1; 
+  color: #2b2b2b; 
+  border: none; 
+  padding: 15px 30px; 
+  font-size: 16px; 
+  text-transform: uppercase; 
+  cursor: pointer; 
+  width: 200px; 
+  text-align: center;
 }
 
 .btn-register:hover {
-  background-color: #777777; /* Dunkleres Grau beim Hover */
+  background-color: #777777; 
 }
 
 .button-container {
-  display: flex; /* Flexbox-Layout */
-  flex-direction: column; /* Buttons werden untereinander angeordnet */
-  justify-content: center; /* Vertikale Zentrierung der Buttons */
-  align-items: center; /* Horizontale Zentrierung der Buttons */
-  height: 100vh; /* Die Höhe des Containers ist 100% der Viewport-Höhe (des gesamten Bildschirms) */
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: center; 
+  height: 100vh; 
 }
 
 #pageLoader {
@@ -144,9 +145,7 @@ h4 {
   z-index: 1;
   top: 249px;
 }
-#wrapper section > div {
-  position: relative;
-}
+
 a.btn-primary {
   font: 600 15px/1.2em 'Open Sans', sans-serif;
   font-style: normal!important;
@@ -192,7 +191,7 @@ a.btn-primary:hover {
   -o-transition: all 0.5s ease;
   transition: all 0.5s ease;
 }
-.scroll,
+
 .scroll_2,
 .scroll_3,
 .scroll_4,
