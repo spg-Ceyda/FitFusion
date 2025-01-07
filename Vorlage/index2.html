@@ -14,10 +14,7 @@
     <link rel="stylesheet" href="css/style.css" type="text/css" media="screen">
 	<link rel="stylesheet" href="css/preview.css" type="text/css">
 	<script type="text/javascript" src="js/include_script.js"></script>
-  	<!--[if lt IE 9]>
-	   	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-	    <link href="css/ie.css" rel="stylesheet" type="text/css">
-    <![endif]-->
+
 </head>
 <body>
 <!--content wrapper-->
@@ -100,44 +97,5 @@
 		</section>
 	</div>
 	<script type="text/javascript" src="js/bootstrap.js"></script>
-	<script>
-		var MSIE = ($.browser.msie) && ($.browser.version <= 8);
-		//********** gall ***********//
-		$('.gall a').attr('rel','appendix')
-	    .prepend('<span class="sitem_over"><strong></strong></span>')
-	    $('.gall a').fancybox({
-	        'transitionIn': 'elastic',
-	    	'transitionOut': 'elastic',
-	    	'speedIn': 500,
-	    	'speedOut': 300,
-	        'centerOnScroll': true,
-	        'overlayColor': '#000'
-	    });
-		
-		$('.gall a')
-	    .find('strong').css('top','200px').end()
-	    .hover(
-	        function(){
-	            if (!MSIE){
-	                $(this).children('.sitem_over').css({display:'block',opacity:'0'}).stop().animate({'opacity':1}).end() 
-	                .find('strong').css({'opacity':0}).stop().animate({'opacity':1,'top':'0'},350,'easeInOutExpo');
-	            } else { 
-	                $(this).children('.sitem_over').stop().show().end()
-	                .find('strong').stop().show().css({'top':'0'});
-	            }
-	        },
-	        function(){
-	            if (!MSIE){
-	                $(this).children('.sitem_over').stop().animate({'opacity':0},1000,'easeOutQuad',function(){$(this).children('.sitem_over').css({display:'none'})}).end()  
-	                .find('strong').stop().animate({'opacity':0,'top':'200px'},1000,'easeOutQuad');  
-	            } else {
-	                $(this).children('.sitem_over').stop().hide().end()
-	                .find('strong').stop().hide();
-	            }            
-	        }
-	    );
-
-	//********** end gall ***********//
-	</script>
 </body>
 </html>
