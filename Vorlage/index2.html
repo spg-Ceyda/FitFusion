@@ -1,118 +1,120 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <title>Trainingsübungen</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
-    <meta name="description" content="Trainingsübungen für Muskelaufbau">
-    <meta name="keywords" content="Trainingsübungen, Muskelaufbau, Fitness">
-    <meta name="author" content="Dein Name">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
+    <meta name="description" content="Trainingsübungen für Muskelaufbau" />
+    <meta name="keywords" content="Trainingsübungen, Muskelaufbau, Fitness" />
+    <meta name="author" content="Dein Name" />
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #1e1e2f;
-            color: #fff;
-        }
-        h1 {
-            text-align: center;
-            color: #f5f5f5;
-            margin-bottom: 30px;
-        }
-        .card-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 20px;
-            margin: 20px auto;
-            max-width: 1000px;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #1e1e2f;
+        color: #fff;
+      }
+      h1 {
+        text-align: center;
+        color: #f5f5f5;
+        margin-bottom: 30px;
+      }
+      .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 20px;
+        margin: 20px auto;
+        max-width: 1000px;
+      }
+      .card {
+        background-color: #2b2b3c;
+        padding: 20px;
+        border-radius: 10px;
+        width: calc(33.333% - 20px);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        text-align: center;
+        cursor: pointer;
+      }
+      .card:hover {
+        background-color: #444;
+      }
+      .card a {
+        text-decoration: none;
+        color: #fff;
+        font-size: 18px;
+        font-weight: bold;
+        display: block;
+      }
+      @media screen and (max-width: 768px) {
         .card {
-            background-color: #2b2b3c;
-            padding: 20px;
-            border-radius: 10px;
-            width: calc(33.333% - 20px);
-            box-shadow: 0 0 10px rgba(0,0,0,0.5);
-            text-align: center;
-            cursor: pointer;
+          width: calc(50% - 20px);
         }
-        .card:hover {
-            background-color: #444;
+      }
+      @media screen and (max-width: 480px) {
+        .card {
+          width: calc(100% - 20px);
         }
-        .card a {
-            text-decoration: none;
-            color: #fff;
-            font-size: 18px;
-            font-weight: bold;
-            display: block;
-        }
-        @media screen and (max-width: 768px) {
-            .card {
-                width: calc(50% - 20px);
-            }
-        }
-        @media screen and (max-width: 480px) {
-            .card {
-                width: calc(100% - 20px);
-            }
-        }
+      }
 
-        /* Button style */
-        .menu-button {
-            position: fixed;
-            left: 20px;
-            bottom: 20px;
-            background-color: #333;
-            color: #fff;
-            padding: 15px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        .menu-button:hover {
-            background-color: #444;
-        }
+      /* Button style */
+      .menu-button {
+        position: fixed;
+        left: 20px;
+        bottom: 20px;
+        background-color: #333;
+        color: #fff;
+        padding: 15px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+      }
+      .menu-button:hover {
+        background-color: #444;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Trainingsübungen</h1>
 
     <div class="card-container">
-        <div class="card">
-            <a href="uebung-bankdruecken.html">Bankdrücken</a>
-        </div>
-        <div class="card">
-            <a href="uebung-schraegbankdruecken.html">Schrägbankdrücken</a>
-        </div>
-        <div class="card">
-            <a href="uebung-dips.html">Dips</a>
-        </div>
-        <div class="card">
-            <a href="uebung-schulterdruecken.html">Schulterdrücken</a>
-        </div>
-        <div class="card">
-            <a href="uebung-kreuzheben.html">Kreuzheben</a>
-        </div>
-        <div class="card">
-            <a href="uebung-klimmzuege.html">Klimmzüge</a>
-        </div>
-        <div class="card">
-            <a href="uebung-langhantelrudern.html">Langhantelrudern</a>
-        </div>
-        <div class="card">
-            <a href="uebung-latzug.html">Latzug</a>
-        </div>
-        <div class="card">
-            <a href="uebung-flachbank-kurzhanteln.html">Flachbankdrücken mit Kurzhanteln</a>
-        </div>
-        <div class="card">
-            <a href="uebung-schulterdruecken-kurzhanteln.html">Schulterdrücken mit Kurzhanteln</a>
-        </div>
+      <div class="card">
+        <a href="uebung-bankdruecken.html">Bankdrücken</a>
+      </div>
+      <div class="card">
+        <a href="uebungen/uebung-schraegbankdruecken.html">Schrägbankdrücken</a>
+      </div>
+      <div class="card">
+        <a href="uebungen/uebung-dips.html">Dips</a>
+      </div>
+      <div class="card">
+        <a href="uebungen/uebung-schulterdruecken.html">Schulterdrücken</a>
+      </div>
+      <div class="card">
+        <a href="uebungen/uebung-kreuzheben.html">Kreuzheben</a>
+      </div>
+      <div class="card">
+        <a href="uebungen/uebung-klimmzuege.html">Klimmzüge</a>
+      </div>
+      <div class="card">
+        <a href="uebungen/uebung-langhantelrudern.html">Langhantelrudern</a>
+      </div>
+      <div class="card">
+        <a href="uebungen/uebung-latzug.html">Latzug</a>
+      </div>
+      <div class="card">
+        <a href="uebungen/uebung-flachbank-kurzhanteln.html"
+          >Flachbankdrücken mit Kurzhanteln</a
+        >
+      </div>
+      <div class="card">
+        <a href="uebungen/uebung-schulterdruecken-kurzhanteln.html"
+          >Schulterdrücken mit Kurzhanteln</a
+        >
+      </div>
     </div>
 
-    <a href="index.html" class="menu-button">Menü</a>
-</body>
+    <a href="test.html" class="menu-button">Menü</a>
+  </body>
 </html>
-
-
