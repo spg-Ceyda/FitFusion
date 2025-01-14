@@ -1,13 +1,27 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f4f8;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
+    background-color: #f5f5dc; /* Beige background */
+    font-family: "Roboto", sans-serif; /* Modern font */
+  }
+  .navbar {
+    background-color: #6c757d; /* Muted dark color */
+  }
+  .navbar-brand {
+    font-weight: bold;
+  }
+  .container h1 {
+    color: #333;
+  }
+  .container p {
+    color: #555;
+  }
+  .btn-primary {
+    background-color: #8b4513; /* Modern beige accent */
+    border-color: #8b4513;
+  }
+  .btn-primary:hover {
+    background-color: #a0522d;
+    border-color: #a0522d;
+  }
 .register-container {
     background: #ffffff;
     padding: 30px;
@@ -36,4 +50,5 @@ input[type="password"]  {
     justify-content: space-between; /* Platz zwischen Label und Input */
     margin-bottom: 15px; /* Abstand zwischen Feldern */
 }
+    
 
