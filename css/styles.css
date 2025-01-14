@@ -5,6 +5,18 @@ body {
   .navbar {
     background-color: #6c757d; /* Muted dark color */
   }
+  .nav-item-border {
+    border-right: 1px solid #ffffff; /* Farbe der Trennlinie */
+  }
+  
+  .nav-item-border:last-child {
+    border-right: none; /* Keine Linie nach dem letzten Element */
+  }
+  
+  .nav-link {
+    padding-right: 15px; /* Zusätzlicher Abstand für Text */
+    padding-left: 15px;
+  }
   .navbar-brand {
     font-weight: bold;
   }
