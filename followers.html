@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Social Media Links</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome for Social Media Icons -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        color: #333;
+        text-align: center;
+        padding: 50px 0;
+      }
+
+      h1 {
+        margin-bottom: 30px;
+        font-size: 2.5rem;
+      }
+
+      .social-links {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 20px;
+      }
+
+      .social-links a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 60px;
+        height: 60px;
+        color: #fff;
+        font-size: 24px;
+        text-decoration: none;
+        border-radius: 50%;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+      }
+
+      .social-links a:hover {
+        transform: scale(1.1);
+      }
+
+      .social-links a.tiktok {
+        background-color: #000000;
+      }
+
+      .social-links a.instagram {
+        background: linear-gradient(
+          45deg,
+          #f09433,
+          #e6683c,
+          #dc2743,
+          #cc2366,
+          #bc1888
+        );
+      }
+
+      .social-links a.twitter {
+        background-color: #1da1f2;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Follow Us on Social Media</h1>
+    <div class="social-links">
+      <!-- TikTok -->
+      <a
+        href="https://www.tiktok.com/de-DE/"
+        class="tiktok"
+        target="_blank"
+        aria-label="TikTok"
+        ><i class="fab fa-tiktok"></i
+      ></a>
+
+      <!-- Instagram -->
+      <a
+        href="https://www.instagram.com/"
+        class="instagram"
+        target="_blank"
+        aria-label="Instagram"
+        ><i class="fab fa-instagram"></i
+      ></a>
+
+      <!-- Twitter -->
+      <a
+        href="https://x.com/?lang=de"
+        class="twitter"
+        target="_blank"
+        aria-label="Twitter"
+        ><i class="fab fa-twitter"></i
+      ></a>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
