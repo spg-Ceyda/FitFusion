@@ -1,112 +1,37 @@
-﻿<!DOCTYPE HTML>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="de">
 <head>
-	<title>index</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="img/favicon.png" type="image/x-icon">
-    <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon" />
-    <meta name="description" content="Your description">
-    <meta name="keywords" content="Your keywords">
-    <meta name="author" content="Your name">
- 	<link rel="stylesheet" href="css/bootstrap.css" type="text/css" media="screen">
-    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen">
-	<script type="text/javascript" src="js/include_script.js"></script>
-	<!--[if lt IE 8]><div style='text-align:center'><a href="http://www.microsoft.com/windows/internet-explorer/default.aspx?ocid=ie6_countdown_bannercode"><img src="http://www.theie6countdown.com/img/upgrade.jpg"border="0"alt=""/></a></div>
-	<![endif]-->
-  	<!--[if lt IE 9]>
-	   	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-	    <link href="css/ie.css" rel="stylesheet" type="text/css">
-
-    <![endif]-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landingpage</title>
+    <link rel="stylesheet" href="css/styles.css" />
 </head>
-<body>
-<!--button back top-->
-	<div id="back-top"></div>
-<!--page spinner-->
-	<div id="pageLoader"><div></div></div>
-<!--gallery image-->
-	<div id="imgSpinner"></div>
-    <div id="galleryHolder"> 	
-		<div id="imageHolder">
-			<img src="img/bg_pic1.jpg" alt>
-		</div>
-	</div>
-<!--content wrapper-->
-	<div id="wrapper">
-<!--header-->
-		<header>
-			<div class="row">
-				<div class="span16">
-					<div class="top-link">
-						<a href="Anmelden.html" class="btn-anmelden">Anmelden</a>
-						<a href="Registrieren.html" class="btn-register">Registrieren</a>
-					</div>
-				</div>
-			</div>
-		</div>
-		</header>
-<!--content-->	
-		<div class="containerHolder">
-    		<section>
-                <div class="container">
-                    <div class="dynamicContent">
-						<div>
-							<div class="row">
-	                            <div class="span16">
-	                                <div class="slogans">
-	                                    <ul>
-	                                        <li>
-	                                        	<p class="text1">FitFusion</p>
-	                                        	<p class="text2">Get healthy now!</p>
-	                                        </li>  
-	                                    </ul>
-	                                    <div class="pagination" id="inner">
-	                                    </div>
-	                                </div>
-	                            </div>
-	                        </div>
-						</div>
-                    </div>
-                </div>
-    		</section>
-		</div>
-<!--footer-->	
-		<footer>
-			<div class="container">
-				<div class="row marg_1">
-					<div class="span5">
-<!--logo and company name-->		
-						<h1><a href="index.html" id="logo">FitFusion</a></h1>
-					</div>
-			<!--menu-->
-					<div class="span8 offset3">
-						<div class="home_item">
-							<a href="index.html"><img src="img/home_icon.png" alt=""></a>
-						</div>
-                        
-							<div class="menu">
-								<ul class="sf-menu">
-									<li><a href="index2.html"><div class="mText">Workouts</div></a></li>
-									<li><a href="index3.html"><div class="mText">Training</div></a></li>
-									
-								</ul>
-							</div>
-						
-					</div>
-				</div>
-				<div class="row">
-					<div class="span10 f_info">
-						<p><span>FitFusion</span> 
-					</div>
-				</div>
-			</div>
-			
-		</footer>		
-	</div>
-	<script type="text/javascript" src="js/bootstrap.js"></script>
-	
-	
 
+
+<body>
+    <div class="taskbar transparent">
+    <div class="taskbar">
+        <div class="logo">FitFusion</div>
+        <button class="login-button" href="Anmelden.html">Anmelden</button>
+    <script>
+        document.querySelector('.login-button').addEventListener('click', () => {
+            window.location.href = 'Anmelden.html';
+        });
+    </script>
+    </div>
+
+        <script>
+            const taskbar = document.querySelector('.taskbar');
+    
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    taskbar.classList.remove('transparent');
+                    taskbar.classList.add('scrolled');
+                } else {
+                    taskbar.classList.remove('scrolled');
+                    taskbar.classList.add('transparent');
+                }
+            });
+        </script>
 </body>
 </html>
