@@ -1,18 +1,38 @@
-// server.js
 const express = require('express');
 const bodyParser = require('body-parser');
 const { PrismaClient } = require('@prisma/client');
-const cors = require('cors'); // Füge dies hinzu
-const bcrypt = require('bcrypt'); // Importiere bcrypt für Passwort-Hashing
+const cors = require('cors');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 const app = express();
 const prisma = new PrismaClient();
 const PORT = 3000;
-
+const SECRET_KEY = process.env.JWT_SECRET || "geheime-schluessel";
 
 // Middleware
-app.use(cors()); // Aktiviere CORS
+app.use(cors());
 app.use(bodyParser.json());
+
+// --------------------------
+// Middleware zur Token-Verifizierung
+// --------------------------
+const verifyToken = (req, res, next) => {
+    const token = req.headers.authorization?.split(" ")[1];
+
+    if (!token) {
+        return res.status(401).json({ error: "Kein Token vorhanden" });
+    }
+
+    jwt.verify(token, SECRET_KEY, (err, decoded) => {
+        if (err) {
+            return res.status(403).json({ error: "Token ungültig" });
+        }
+        req.user = decoded; // Den User zur Anfrage hinzufügen
+        next();
+    });
+};
 
 // --------------------------
 // User Endpoints
@@ -23,15 +43,13 @@ app.post('/users', async (req, res) => {
     const { UserName, Email, Password, ProfilePicture } = req.body;
 
     try {
-
-
-        const hashedPassword = await bcrypt.hash(Password, 10); // Passwort hashen
+        const hashedPassword = await bcrypt.hash(Password, 10);
 
         const user = await prisma.user.create({
             data: {
                 UserName,
                 Email,
-                Password: hashedPassword, // Gehashtes Passwort speichern
+                Password: hashedPassword,
                 ProfilePicture,
             },
         });
@@ -41,8 +59,8 @@ app.post('/users', async (req, res) => {
     }
 });
 
-// 2. Alle Benutzer abrufen
-app.get('/users', async (req, res) => {
+// 2. Alle Benutzer abrufen (geschützt)
+app.get('/users', verifyToken, async (req, res) => {
     try {
         const users = await prisma.user.findMany();
         res.json(users);
@@ -54,9 +72,7 @@ app.get('/users', async (req, res) => {
 // --------------------------
 // WorkoutPost Endpoints
 // --------------------------
-
-// 3. WorkoutPost erstellen
-app.post('/workoutPosts', async (req, res) => {
+app.post('/workoutPosts', verifyToken, async (req, res) => {
     const { title, description, image, userId } = req.body;
 
     try {
@@ -76,11 +92,10 @@ app.post('/workoutPosts', async (req, res) => {
     }
 });
 
-// 4. Alle WorkoutPosts abrufen
 app.get('/workoutPosts', async (req, res) => {
     try {
         const workoutPosts = await prisma.workoutPost.findMany({
-            include: { user: true }, // Benutzerdaten zusammen abrufen
+            include: { user: true },
         });
         res.json(workoutPosts);
     } catch (error) {
@@ -91,9 +106,7 @@ app.get('/workoutPosts', async (req, res) => {
 // --------------------------
 // Workout Endpoints
 // --------------------------
-
-// 5. Workout erstellen
-app.post('/workouts', async (req, res) => {
+app.post('/workouts', verifyToken, async (req, res) => {
     const { name, userId } = req.body;
 
     try {
@@ -111,14 +124,13 @@ app.post('/workouts', async (req, res) => {
     }
 });
 
-// 6. Alle Workouts eines Benutzers abrufen
-app.get('/workouts/:userId', async (req, res) => {
+app.get('/workouts/:userId', verifyToken, async (req, res) => {
     const userId = req.params.userId;
 
     try {
         const workouts = await prisma.workout.findMany({
             where: { userId },
-            include: { exercises: true }, // Übungen mit einbeziehen
+            include: { exercises: true },
         });
         res.json(workouts);
     } catch (error) {
@@ -129,9 +141,7 @@ app.get('/workouts/:userId', async (req, res) => {
 // --------------------------
 // Exercise Endpoints
 // --------------------------
-
-// 7. Exercise erstellen
-app.post('/exercises', async (req, res) => {
+app.post('/exercises', verifyToken, async (req, res) => {
     const { name, description, sets, reps, weight, workoutId } = req.body;
 
     try {
@@ -153,8 +163,7 @@ app.post('/exercises', async (req, res) => {
     }
 });
 
-// 8. Alle Übungen eines Workouts abrufen
-app.get('/exercises/:workoutId', async (req, res) => {
+app.get('/exercises/:workoutId', verifyToken, async (req, res) => {
     const workoutId = req.params.workoutId;
 
     try {
@@ -168,43 +177,8 @@ app.get('/exercises/:workoutId', async (req, res) => {
 });
 
 // --------------------------
-// Follower Endpoints
+// Benutzeranmeldung mit JWT
 // --------------------------
-
-// 9. Follower hinzufügen
-app.post('/followers', async (req, res) => {
-    const { followerId } = req.body;
-
-    try {
-        const follower = await prisma.follower.create({
-            data: {
-                follower: {
-                    connect: { id: followerId },
-                },
-            },
-        });
-        res.status(201).json(follower);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
-
-// 10. Alle Follower eines Benutzers abrufen
-app.get('/followers/:userId', async (req, res) => {
-    const userId = req.params.userId;
-
-    try {
-        const followers = await prisma.follower.findMany({
-            where: { followerId: userId },
-            include: { follower: true }, // Benutzerdaten mit einbeziehen
-        });
-        res.json(followers);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
-
-// Benutzeranmeldung
 app.post('/login', async (req, res) => {
     const { UserName, Password } = req.body;
 
@@ -216,21 +190,32 @@ app.post('/login', async (req, res) => {
         if (!user) {
             return res.status(401).json({ error: 'Benutzername ungültig.' });
         }
-        console.log(Password);
-        const isValidPassword = await bcrypt.compare(Password, user.Password); // Passwort überprüfen
+
+        const isValidPassword = await bcrypt.compare(Password, user.Password);
 
         if (!isValidPassword) {
             return res.status(401).json({ error: 'Passwort ungültig.' });
         }
 
-        res.status(200).json({ message: 'Anmeldung erfolgreich!', user });
+        // Token erstellen
+        const token = jwt.sign({ id: user.id, username: user.UserName }, SECRET_KEY, { expiresIn: "1h" });
+
+        res.status(200).json({ message: 'Anmeldung erfolgreich!', token });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
 
+// --------------------------
+// Geschützte Route testen
+// --------------------------
+app.get('/protected', verifyToken, (req, res) => {
+    res.json({ message: "Zugriff gewährt!", user: req.user });
+});
 
+// --------------------------
 // Server starten
+// --------------------------
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
