@@ -15,7 +15,12 @@ model User {
     ProfilePicture String
     workouts       Workout[]
     workoutPosts   WorkoutPost[]
-    friends        Follower[]
+
+    // Benutzer, die mir folgen (Follower-Relation)
+    followers Follower[] @relation("UserFollowers")
+
+    // Benutzer, denen ich folge (Following-Relation)
+    following Follower[] @relation("UserFollowing")
 }
 
 model WorkoutPost {
@@ -47,7 +52,15 @@ model Exercise {
 }
 
 model Follower {
-    id         String @id @default(cuid())
-    follower   User   @relation(fields: [followerId], references: [id])
+    id String @id @default(cuid())
+
+    // Der Benutzer, der folgt
+    follower   User   @relation("UserFollowers", fields: [followerId], references: [id])
     followerId String
+
+    // Der Benutzer, dem gefolgt wird
+    following   User   @relation("UserFollowing", fields: [followingId], references: [id])
+    followingId String
+
+    @@unique([followerId, followingId]) // Ein Benutzer kann nicht doppelt folgen
 }

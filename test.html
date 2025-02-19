@@ -17,6 +17,15 @@
         if (!token) {
           window.location.href = "Anmelden.html";
         }
+
+        // Token decodieren (ohne Backend-Anfrage)
+        const payload = JSON.parse(atob(token.split(".")[1]));
+        console.log("Eingeloggter Benutzer:", payload.username);
+
+        // Optional: Benutzername in die UI schreiben
+        document.getElementById(
+          "usernameDisplay"
+        ).innerText = `Willkommen, ${payload.username}`;
       });
 
       function logout() {
@@ -50,7 +59,7 @@
               >
             </li>
             <li class="nav-item nav-item-border">
-              <a class="nav-link" href="followers.html">Social Media</a>
+              <a class="nav-link" href="SocialMedia.html">Social Media</a>
             </li>
             <li class="nav-item nav-item-border">
               <a class="nav-link" href="ueber-uns.html">Über Uns</a>
@@ -60,13 +69,18 @@
                 >Abmelden</a
               >
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="follower.html">Follower</a>
+            </li>
           </ul>
         </div>
       </div>
     </nav>
 
     <div class="container text-center mt-5">
-      <h1 class="display-4">Willkommen bei FitFusion</h1>
+      <h1 class="display-4">
+        Willkommen bei FitFusion <span id="usernameDisplay"></span>
+      </h1>
       <p class="lead text-muted">
         Verfolgen Sie Ihre Workouts, entdecken Sie neue Übungen und verbinden
         Sie sich mit Fitnessbegeisterten!

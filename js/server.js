@@ -177,6 +177,67 @@ app.get('/exercises/:workoutId', verifyToken, async (req, res) => {
 });
 
 // --------------------------
+// UserSearch Endpoints
+// --------------------------
+app.get('/searchUsers', verifyToken, async (req, res) => {
+    const searchQuery = req.query.q || ""; // Suchparameter
+    const userId = req.user.id; // Aktuell eingeloggter Benutzer
+
+    try {
+        const users = await prisma.user.findMany({
+            where: {
+                id: { notIn: [userId] }, // Hier wurde `not` zu `notIn` geändert!
+                UserName: { contains: searchQuery, mode: "insensitive" }
+            },
+            select: { id: true, UserName: true, ProfilePicture: true }
+        });
+
+
+        res.json(users);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// --------------------------
+// Follower Endpoints
+// --------------------------
+
+app.post('/follow', verifyToken, async (req, res) => {
+    const { followUserId } = req.body;
+    const userId = req.user.id;
+
+    if (userId === followUserId) {
+        return res.status(400).json({ error: "Du kannst dir nicht selbst folgen." });
+    }
+
+    try {
+        const existingFollow = await prisma.follower.findFirst({
+            where: {
+                followerId: userId,
+                followingId: followUserId
+            }
+        });
+
+        if (existingFollow) {
+            return res.status(400).json({ error: "Du folgst diesem Benutzer bereits." });
+        }
+
+        await prisma.follower.create({
+            data: {
+                followerId: userId,
+                followingId: followUserId
+            }
+        });
+
+        res.json({ message: "Erfolgreich gefolgt!" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
+// --------------------------
 // Benutzeranmeldung mit JWT
 // --------------------------
 app.post('/login', async (req, res) => {
