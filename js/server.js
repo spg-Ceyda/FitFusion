@@ -199,6 +199,20 @@ app.get('/searchUsers', verifyToken, async (req, res) => {
     }
 });
 
+app.get('/me', verifyToken, async (req, res) => {
+    try {
+        const user = await prisma.user.findUnique({
+            where: { id: req.user.id },
+            select: { id: true, UserName: true, ProfilePicture: true }
+        });
+
+        if (!user) return res.status(404).json({ error: "Benutzer nicht gefunden." });
+
+        res.json(user);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
 // --------------------------
 // Follower Endpoints
 // --------------------------
