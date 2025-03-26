@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Benutzeranmeldung</title>
     <link rel="stylesheet" href="css/styles.css" />
-    <style media="screen">
+    <style>
       button {
         margin-top: 50px;
         width: 100%;
@@ -35,15 +35,20 @@
 
       <button type="submit">Anmelden</button>
 
-      <button type="button" class="login-button" onclick="location.href='Registrieren.html'">
-       Registrieren </button>
+      <button
+        type="button"
+        class="login-button"
+        onclick="location.href='Registrieren.html'"
+      >
+        Registrieren
+      </button>
     </form>
 
     <script>
       const loginForm = document.getElementById("loginForm");
 
       loginForm.addEventListener("submit", async (event) => {
-        event.preventDefault(); // Verhindert das standardmäßige Absenden des Formulars
+        event.preventDefault();
 
         const loginData = {
           UserName: loginForm.username.value,
@@ -53,18 +58,16 @@
         try {
           const response = await fetch("http://localhost:3000/login", {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(loginData),
           });
 
           const result = await response.json();
 
           if (response.ok) {
+            localStorage.setItem("token", result.token);
             alert("Anmeldung erfolgreich!");
-            // Weiterleitung zur nächsten Seite (z.B. dashboard.html)
-            window.location.href = "test.html"; // Ersetze dies durch den tatsächlichen Pfad zur nächsten Seite
+            window.location.href = "test.html";
           } else {
             alert("Fehler: " + result.error);
           }

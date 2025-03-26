@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Suche & Folgen</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">FitFusion</a>
+        <button class="btn btn-danger" onclick="logout()">Abmelden</button>
+      </div>
+    </nav>
+
+    <div class="container mt-5">
+      <h2>Benutzer suchen</h2>
+      <input
+        type="text"
+        id="searchInput"
+        class="form-control"
+        placeholder="Benutzernamen suchen..."
+        oninput="searchUsers()"
+      />
+      <ul id="userList" class="list-group mt-3"></ul>
+      <div id="noUsersFound" class="text-muted mt-3" style="display: none">
+        Keine Benutzer gefunden.
+      </div>
+    </div>
+
+    <script>
+      let currentUser = null;
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          window.location.href = "Anmelden.html";
+        }
+
+        // Token decodieren (ohne Backend-Anfrage)
+        const payload = JSON.parse(atob(token.split(".")[1]));
+        console.log("Eingeloggter Benutzer:", payload.username);
+      });
+
+      async function fetchCurrentUser() {
+        const response = await fetch(`http://localhost:3000/me`, {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        });
+        if (!response.ok) throw new Error("Fehler beim Abrufen des Nutzers");
+        currentUser = await response.json();
+      }
+
+      function loadAllUsers() {
+        fetch(`http://localhost:3000/users`, {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        })
+          .then((response) => response.json())
+          .then((users) => renderUserList(users))
+          .catch((error) =>
+            console.error("Fehler beim Laden der Benutzer:", error)
+          );
+      }
+
+      function searchUsers() {
+        const query = document.getElementById("searchInput").value.trim();
+        if (query === "") {
+          loadAllUsers();
+          return;
+        }
+
+        fetch(
+          `http://localhost:3000/searchUsers?q=${encodeURIComponent(query)}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        )
+          .then((response) => response.json())
+          .then((users) => renderUserList(users))
+          .catch((error) => {
+            console.error("Fehler beim Abrufen der Benutzer:", error);
+            document.getElementById("noUsersFound").style.display = "block";
+          });
+      }
+
+      function renderUserList(users) {
+        const userList = document.getElementById("userList");
+        const noUsersFound = document.getElementById("noUsersFound");
+        userList.innerHTML = "";
+
+        const filteredUsers = users.filter(
+          (user) => user.id !== currentUser?.id
+        );
+
+        if (filteredUsers.length === 0) {
+          noUsersFound.style.display = "block";
+          return;
+        }
+
+        noUsersFound.style.display = "none";
+        filteredUsers.forEach((user) => {
+          const li = document.createElement("li");
+          li.className =
+            "list-group-item d-flex justify-content-between align-items-center";
+          li.innerHTML = `
+            <div>
+              <img src="${
+                user.ProfilePicture || "default.jpg"
+              }" class="rounded-circle" width="40" height="40">
+              <span>${user.UserName}</span>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="followUser('${
+              user.id
+            }')">Folgen</button>
+          `;
+          userList.appendChild(li);
+        });
+      }
+
+      function followUser(userId) {
+        fetch(`http://localhost:3000/follow`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify({ followUserId: userId }),
+        })
+          .then((response) => response.json())
+          .then((data) =>
+            alert(data.message || "Du folgst diesem Benutzer jetzt!")
+          )
+          .catch((error) =>
+            console.error("Fehler beim Folgen des Benutzers:", error)
+          );
+      }
+
+      function logout() {
+        localStorage.removeItem("token");
+        window.location.href = "Anmelden.html";
+      }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
