@@ -3,6 +3,9 @@
   <head>
     <title>index-3</title>
     <meta charset="utf-8" />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
+
 
     <link
       rel="stylesheet"
@@ -23,15 +26,16 @@
             position: fixed;
             right: 20px;
             bottom: 20px;
-            background-color: #007BFF;
+            background-color: #8b4513;
             color: #fff;
             padding: 15px;
             border-radius: 5px;
             text-decoration: none;
             font-weight: bold;
+            border: 2px solid black;
         }
         .back-button:hover {
-            background-color: #0056b3;
+            background-color: #8b4513;
         }
       .button-box {
         width: auto; 
@@ -42,17 +46,18 @@
       .button-box .button {
         display: inline-block; 
         padding: 8px 15px;
-        background-color: #333; 
+        background-color: #8b4513; 
         color: #fff; 
         text-decoration: none; 
         font-weight: bold; 
         text-align: center; 
         border-radius: 5px; 
         transition: background-color 0.3s ease; 
+        border: 2px solid black;
       }
 
       .button-box .button:hover {
-        background-color: #444; 
+        background-color: #8b4513; 
       }
       .divider {
         margin: 20px 0; 
@@ -60,6 +65,50 @@
         height: 3px; 
         background-color: #333; 
       }
+
+      h4 {
+        font-size: 30px;
+        font-family: 'Bebas Neue', sans-serif;
+        font-weight: normal;
+      }
+
+      h2{
+        font-size: 35px;
+        text-align: center;
+        font-family: 'Oswald', sans-serif;
+        font-weight: normal;
+      }
+
+      body,html{
+        height: 100%;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: Arial, sans-serif;
+      }
+
+      #wrapper {
+        width: 100%;
+        max-width: 1200px; /* Optional: maximale Breite */
+        padding: 20px;
+        box-sizing: border-box;
+        text-align: start;
+      }
+
+      .text3{
+        font-size: 17px;
+        font-weight: 700;
+      }
+
+      @media (max-width: 768px) {
+          img {
+          float: none;
+          display: block;
+          margin: 20px auto;
+      }
+}
+
     </style>
   </head>
   <body>
@@ -72,8 +121,7 @@
               <div class="container">
                 <div class="row">
                   <div class="span14 offset1">
-                    <h2>Der perfekte</h2>
-                    <h3>Trainingsplan</h3>
+                    <h2>Der perfekte Trainingsplan</h2>
                     <div class="scroll_3">
                       <div>
                         <ul class="list3">

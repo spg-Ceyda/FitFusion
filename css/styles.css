@@ -9,8 +9,8 @@ body {
     border-right: 1px solid #ffffff; /* Farbe der Trennlinie */
   }
   
-  .nav-item-border:last-child {
-    border-right: none; /* Keine Linie nach dem letzten Element */
+  .nav-item-border:not(:last-child) {
+    border-right: 1px solid #ffffff; /* Keine Linie nach dem letzten Element */
   }
   
   .nav-link {
@@ -24,7 +24,7 @@ body {
     color: #333;
   }
   .container p {
-    color: #555;
+    color: black;
   }
   .btn-primary {
     background-color: #8b4513; /* Modern beige accent */
@@ -34,8 +34,13 @@ body {
     background-color: #a0522d;
     border-color: #a0522d;
   }
+
+  .btn-lgs{
+    border: 2px, solid, bla;
+  }
+
 .register-container {
-    background: #ffffff;
+    background: #8b4513;
     padding: 30px;
     border: 10px solid black; /* Blauer Rahmen */
     width: 100%;
@@ -43,13 +48,19 @@ body {
     text-align: center;
 }
 .login-container {
-    background: #ffffff;
+    background: #8b4513;
     padding: 50px;
     border: 10px solid black; /* Blauer Rahmen */    
     width: 100%;
     max-width: 400px;
     text-align: center;
 }
+
+.btn-lgs{
+  border: 2px, solid, black;
+}
+
+
 
 input[type="text"],
 input[type="email"], 
@@ -94,11 +105,12 @@ form * {
   border: none;
 }
 form h3 {
-  font-size: 32px;
+  font-size: 52px;
   font-weight: 500;
   line-height: 42px;
   text-align: center;
 }
+
 
 label {
   display: block;
@@ -127,6 +139,7 @@ input {
     border: none;
   }
 }
+
 
 
 @media (max-width: 768px) {
@@ -163,4 +176,5 @@ input {
 img {
   max-width: 100%;
   height: auto;
+  float: right;
 }
