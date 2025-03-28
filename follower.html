@@ -27,55 +27,116 @@
         oninput="searchUsers()"
       />
       <ul id="userList" class="list-group mt-3"></ul>
+      <div id="noUsersFound" class="text-muted mt-3" style="display: none">
+        Keine Benutzer gefunden.
+      </div>
     </div>
 
     <script>
+      let currentUser = null;
+
       document.addEventListener("DOMContentLoaded", () => {
         const token = localStorage.getItem("token");
         if (!token) {
           window.location.href = "Anmelden.html";
-          return;
         }
+
+        // Token decodieren (ohne Backend-Anfrage)
+        const payload = JSON.parse(atob(token.split(".")[1]));
+        console.log("Eingeloggter Benutzer:", payload.username);
       });
 
-      function searchUsers() {
-        const query = document.getElementById("searchInput").value;
+      async function fetchCurrentUser() {
+        const response = await fetch(`http://localhost:3000/me`, {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        });
+        if (!response.ok) throw new Error("Fehler beim Abrufen des Nutzers");
+        currentUser = await response.json();
+      }
 
-        fetch(`http://localhost:3000/searchUsers?q=${query}`, {
+      function loadAllUsers() {
+        fetch(`http://localhost:3000/users`, {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         })
           .then((response) => response.json())
-          .then((users) => {
-            console.log("Antwort von /searchUsers:", users); // Debugging
-
-            if (!Array.isArray(users)) {
-              console.error("Fehler: Erwartetes Array, aber erhalten:", users);
-              return;
-            }
-
-            const userList = document.getElementById("userList");
-            userList.innerHTML = "";
-
-            users.forEach((user) => {
-              const li = document.createElement("li");
-              li.className =
-                "list-group-item d-flex justify-content-between align-items-center";
-              li.innerHTML = `
-                <div>
-                    <img src="${
-                      user.ProfilePicture || "default.jpg"
-                    }" class="rounded-circle" width="40" height="40">
-                    <span>${user.UserName}</span>
-                </div>
-                <button class="btn btn-primary btn-sm" onclick="followUser('${
-                  user.id
-                }')">Folgen</button>
-            `;
-              userList.appendChild(li);
-            });
-          })
+          .then((users) => renderUserList(users))
           .catch((error) =>
-            console.error("Fehler beim Abrufen der Benutzer:", error)
+            console.error("Fehler beim Laden der Benutzer:", error)
+          );
+      }
+
+      function searchUsers() {
+        const query = document.getElementById("searchInput").value.trim();
+        if (query === "") {
+          loadAllUsers();
+          return;
+        }
+
+        fetch(
+          `http://localhost:3000/searchUsers?q=${encodeURIComponent(query)}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        )
+          .then((response) => response.json())
+          .then((users) => renderUserList(users))
+          .catch((error) => {
+            console.error("Fehler beim Abrufen der Benutzer:", error);
+            document.getElementById("noUsersFound").style.display = "block";
+          });
+      }
+
+      function renderUserList(users) {
+        const userList = document.getElementById("userList");
+        const noUsersFound = document.getElementById("noUsersFound");
+        userList.innerHTML = "";
+
+        const filteredUsers = users.filter(
+          (user) => user.id !== currentUser?.id
+        );
+
+        if (filteredUsers.length === 0) {
+          noUsersFound.style.display = "block";
+          return;
+        }
+
+        noUsersFound.style.display = "none";
+        filteredUsers.forEach((user) => {
+          const li = document.createElement("li");
+          li.className =
+            "list-group-item d-flex justify-content-between align-items-center";
+          li.innerHTML = `
+            <div>
+              <img src="${
+                user.ProfilePicture || "default.jpg"
+              }" class="rounded-circle" width="40" height="40">
+              <span>${user.UserName}</span>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="followUser('${
+              user.id
+            }')">Folgen</button>
+          `;
+          userList.appendChild(li);
+        });
+      }
+
+      function followUser(userId) {
+        fetch(`http://localhost:3000/follow`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify({ followUserId: userId }),
+        })
+          .then((response) => response.json())
+          .then((data) =>
+            alert(data.message || "Du folgst diesem Benutzer jetzt!")
+          )
+          .catch((error) =>
+            console.error("Fehler beim Folgen des Benutzers:", error)
           );
       }
 
