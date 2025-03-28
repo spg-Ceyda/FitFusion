@@ -1,27 +1,43 @@
 body {
     background-color: #f5f5dc; /* Beige background */
     font-family: "Roboto", sans-serif; /* Modern font */
+    
   }
   .navbar {
-    background-color: #6c757d; /* Muted dark color */
+    background-color: #f5f5dc; /* Muted dark color */
+    border-bottom: 2px solid #000;
+    
   }
   .nav-item-border {
-    border-right: 1px solid #ffffff; /* Farbe der Trennlinie */
+    border-right: 1px solid black; /* Farbe der Trennlinie */
+   
   }
-  
+  .navbar-brand:hover{
+    color: black;
+  }
   .nav-item-border:not(:last-child) {
-    border-right: 1px solid #ffffff; /* Keine Linie nach dem letzten Element */
+    border-right: 1px solid black; /* Keine Linie nach dem letzten Element */
   }
-  
+
   .nav-link {
     padding-right: 15px; /* Zusätzlicher Abstand für Text */
     padding-left: 15px;
+    color: black;
+    transition: color 0.3s;
+    position: relative;
   }
+  .navbar .nav-link:hover {
+    
+    color: black;
+    border-color: black;
+  }
+  
   .navbar-brand {
     font-weight: bold;
+    color: black;
   }
   .container h1 {
-    color: #333;
+    color: black;
   }
   .container p {
     color: black;
