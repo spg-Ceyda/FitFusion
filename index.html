@@ -5,18 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Landingpage</title>
     <link rel="stylesheet" href="css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
+    
 </head>
+
+
+<style>
+    .logo{
+        font-family: 'Oswald', sans-serif;
+        text-align: center;
+        font-weight: normal;
+        font-size: 45px;
+    }
+
+    .text{
+        font-family: 'Oswald', sans-serif;
+    }
+</style>
 
 
 <body>
     <div class="taskbar transparent">
     <div class="taskbar">
         <div class="logo">FitFusion</div>
-        <button class="login-button" href="Anmelden.html">Anmelden</button>
+        <div class="button-container">
+            <div class="text"> Willkommen zurück!</div>
+            <button class="login-button2" href="Anmelden.html">Anmelden</button>
+            <div class="text"> Noch kein Konto? Beginne heute mit deiner Fitnessreise! Registriere dich kostenlos</div>
+            <button class="registrieren-button2" href="Registrieren.html">Registrieren</button>
+        </div>
+
+
     <script>
-        document.querySelector('.login-button').addEventListener('click', () => {
+        document.querySelector('.login-button2').addEventListener('click', () => {
             window.location.href = 'Anmelden.html';
         });
+        
+        document.querySelector('.registrieren-button2').addEventListener('click', () => {
+            window.location.href = 'Registrieren.html';
+        })
     </script>
     </div>
 
