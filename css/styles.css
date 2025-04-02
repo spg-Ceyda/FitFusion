@@ -15,8 +15,8 @@ body {
   .navbar-brand:hover{
     color: black;
   }
-  .nav-item-border:not(:last-child) {
-    border-right: 1px solid black; /* Keine Linie nach dem letzten Element */
+  .nav-item-border:last-of-type {
+    border-right: none /* Keine Linie nach dem letzten Element */
   }
 
   .nav-link {
