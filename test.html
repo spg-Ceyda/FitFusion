@@ -12,9 +12,49 @@
     <link rel="stylesheet" href="css/styles.css" />
     <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
 
+
+    <style>
+      body {
+        background-color: #fdfde6; /* Ursprüngliche Hintergrundfarbe */
+      }
+      .hero-section {
+        background-color: #fdfde6; /* Einheitlich mit dem Body */
+        color: #333; /* Dunklere Schrift für bessere Lesbarkeit */
+        padding: 60px 0;
+        text-align: center;
+      }
+      .challenge-box {
+        background: #fdfde6;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        padding: 30px;
+        border: 2px solid black;
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      .btn-custom {
+        background-color: #8b4513; /* Ursprüngliches Braun für den Button */
+        color: #f5f5dc;
+        border: 2px solid black;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+      }
+      .btn-custom:hover {
+        background-color: #a0522d;
+        color: #f5f5dc;
+        border: 2px solid black;
+        transform: scale(1.1);
+      }
+
+      h1{
+          font-family: 'Oswald', sans-serif;
+          font-weight: normal;
+          font-size: 35px;
+        }
+
+    </style>
   </head>
   <body>
-    
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         const token = localStorage.getItem("token");
@@ -26,32 +66,31 @@
         const payload = JSON.parse(atob(token.split(".")[1]));
         console.log("Eingeloggter Benutzer:", payload.username);
 
-        // Optional: Benutzername in die UI schreiben
+        // Benutzername in die UI schreiben
         document.getElementById(
           "usernameDisplay"
-        ).innerText = `${payload.username}`;
+        ).innerText = `${payload.username}!`;
+
+        // Zufällige tägliche Herausforderung generieren
+        const challenges = [
+          "🔥 Heute: Schaffe 50 Liegestütze! 💪",
+          "🏋️‍♂️ 20 Kniebeugen & 20 Ausfallschritte! 🚀",
+          "🏃‍♂️ Laufe 2 km oder mache 5000 Schritte!",
+          "💪 1 Minute Plank – du schaffst das!",
+          "🚲 15 Minuten Cardio – bleib in Bewegung!"
+        ];
+        const randomChallenge =
+          challenges[Math.floor(Math.random() * challenges.length)];
+        document.getElementById("dailyChallenge").innerText = randomChallenge;
       });
 
       function logout() {
         localStorage.removeItem("token");
         window.location.href = "Anmelden.html";
       }
-      
     </script>
 
-    <body>
-      <style>
-       h1{
-          font-family: 'Oswald', sans-serif;
-          font-weight: normal;
-          font-size: 35px;
-        }
-
-        
-      </style>
-</body>
-
-    <nav class="navbar navbar-expand-lg navbar-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #fdfde6;">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">FitFusion</a>
         <button
@@ -78,7 +117,6 @@
             <li class="nav-item nav-item-border">
               <a class="nav-link" href="SocialMedia.html">Social Media</a>
             </li>
-
             <li class="nav-item nav-item-border">
               <a class="nav-link" href="ueber-uns.html">Über Uns</a>
             </li>
@@ -97,19 +135,47 @@
       </div>
     </nav>
 
-    <div class="container text-center mt-5">
-      <h1 class="display-4">
-        Willkommen bei FitFusion, <span id="usernameDisplay"></span>!
-      </h1>
-      <p class="lead text-muted">
-        Verfolgen Sie Ihre Workouts, entdecken Sie neue Übungen und verbinden
-        Sie sich mit Fitnessbegeisterten!
-      </p>
-      <a
-        href="trainingsplaene-uebersicht.html"
-        class="btn btn-primary btn-lg mt-3 btn-lgs"
-        >Legen Sie los!</a
-      >
+    <!-- Hero-Bereich -->
+    <div class="hero-section">
+      <div class="container ">
+        <h1 class="display-4">  
+          Willkommen bei FitFusion, <span id="usernameDisplay">!</span>
+        </h1>
+        <p class="fs-4">
+          „Trainiere hart, spiele smart – werde die beste Version von dir selbst!“
+        </p>
+      </div>
+    </div>
+
+    <!-- Hauptinhalt -->
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-8 offset-md-2 text-center">
+          <p class="lead text-muted">
+            Hier kannst du deine Workouts verfolgen, neue
+            Übungen entdecken und dich mit anderen Fitnessbegeisterten verbinden.
+            Unser Ziel ist es, dich mit Spaß und Disziplin zu deiner Bestform zu
+            bringen!
+          </p>
+          <a
+            href="trainingsplaene-uebersicht.html"
+            class="btn btn-custom btn-lg mt-3"
+            >Legen Sie los!</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Tägliche Herausforderung -->
+    <div class="container-fluid mt-5">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <div class="challenge-box">
+            <h4 class="text-danger">🔥 Tägliche Herausforderung</h4>
+            <p id="dailyChallenge" class="fw-bold"></p>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

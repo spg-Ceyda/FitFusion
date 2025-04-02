@@ -51,6 +51,64 @@ body {
     border-color: #a0522d;
   }
 
+
+
+  .login-button2, .registrieren-button2{
+    display: flex;
+    background-color: #8b4513;
+    color: #f5f5dc;
+    padding: 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    border: 2px solid black;
+    transition: transform 0.3s ease;
+  }
+
+  .login-button2:hover{
+    transform: scale(1.1);
+  }
+  
+  .registrieren-button2:hover{
+    transform: scale(1.1);
+  }
+
+
+  .button-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+
+  .logo{
+    font-family: 'Oswald', sans-serif;
+    font-size: 50px;
+    font-weight: bold;
+    margin-top: 30px;
+    margin-bottom: 70px;
+    border-bottom: 2px solid black;
+  }
+
+  .text{
+    margin-bottom: 10px;
+    display: flex;
+    font-weight: normal;
+    font-size: 30px;
+    justify-content: center;
+  }
+
+  
+  
+  h2{
+    text-align: center;
+    font-size: 30px;
+    
+  }
+
+
   .btn-lgs{
     border: 2px, solid, bla;
   }
