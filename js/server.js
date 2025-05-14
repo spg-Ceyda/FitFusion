@@ -62,12 +62,25 @@ app.post('/users', async (req, res) => {
 // 2. Alle Benutzer abrufen (geschützt)
 app.get('/users', verifyToken, async (req, res) => {
     try {
-        const users = await prisma.user.findMany();
+        const users = await prisma.user.findMany({
+            where: {
+                NOT: { id: req.user.id } // Aktuellen User ausschließen
+            },
+            select: {
+                id: true,
+                UserName: true,
+                Email: true,
+                ProfilePicture: true
+            }
+        });
+        console.log("Users found:", users.length); // Debug-Log
         res.json(users);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error("Users error:", error);
+        res.status(500).json([]);
     }
 });
+
 
 // --------------------------
 // WorkoutPost Endpoints
@@ -180,22 +193,29 @@ app.get('/exercises/:workoutId', verifyToken, async (req, res) => {
 // UserSearch Endpoints
 // --------------------------
 app.get('/searchUsers', verifyToken, async (req, res) => {
-    const searchQuery = req.query.q || ""; // Suchparameter
-    const userId = req.user.id; // Aktuell eingeloggter Benutzer
+    const searchQuery = req.query.q || "";
+    console.log("Searching for:", searchQuery); // Debug-Log
 
     try {
         const users = await prisma.user.findMany({
             where: {
-                id: { notIn: [userId] }, // Hier wurde `not` zu `notIn` geändert!
-                UserName: { contains: searchQuery, mode: "insensitive" }
+                NOT: { id: req.user.id },
+                OR: [
+                    { UserName: { contains: searchQuery, mode: "insensitive" } },
+                    { Email: { contains: searchQuery, mode: "insensitive" } }
+                ]
             },
-            select: { id: true, UserName: true, ProfilePicture: true }
+            select: {
+                id: true,
+                UserName: true,
+                ProfilePicture: true
+            }
         });
-
-
+        console.log("Search results:", users.length); // Debug-Log
         res.json(users);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error("Search error:", error);
+        res.status(500).json([]);
     }
 });
 
@@ -245,6 +265,22 @@ app.post('/follow', verifyToken, async (req, res) => {
         });
 
         res.json({ message: "Erfolgreich gefolgt!" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// In server.js unter den Follower Endpoints hinzufügen
+app.get('/following', verifyToken, async (req, res) => {
+    const userId = req.user.id;
+
+    try {
+        const following = await prisma.follower.findMany({
+            where: { followerId: userId },
+            select: { followingId: true }
+        });
+
+        res.json(following);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
