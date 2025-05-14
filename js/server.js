@@ -85,109 +85,19 @@ app.get('/users', verifyToken, async (req, res) => {
 // --------------------------
 // WorkoutPost Endpoints
 // --------------------------
-app.post('/workoutPosts', verifyToken, async (req, res) => {
-    const { title, description, image, userId } = req.body;
 
-    try {
-        const workoutPost = await prisma.workoutPost.create({
-            data: {
-                title,
-                description,
-                image,
-                user: {
-                    connect: { id: userId },
-                },
-            },
-        });
-        res.status(201).json(workoutPost);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
 
-app.get('/workoutPosts', async (req, res) => {
-    try {
-        const workoutPosts = await prisma.workoutPost.findMany({
-            include: { user: true },
-        });
-        res.json(workoutPosts);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
 
 // --------------------------
 // Workout Endpoints
 // --------------------------
-app.post('/workouts', verifyToken, async (req, res) => {
-    const { name, userId } = req.body;
 
-    try {
-        const workout = await prisma.workout.create({
-            data: {
-                name,
-                user: {
-                    connect: { id: userId },
-                },
-            },
-        });
-        res.status(201).json(workout);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
 
-app.get('/workouts/:userId', verifyToken, async (req, res) => {
-    const userId = req.params.userId;
-
-    try {
-        const workouts = await prisma.workout.findMany({
-            where: { userId },
-            include: { exercises: true },
-        });
-        res.json(workouts);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
 
 // --------------------------
 // Exercise Endpoints
 // --------------------------
-app.post('/exercises', verifyToken, async (req, res) => {
-    const { name, description, sets, reps, weight, workoutId } = req.body;
 
-    try {
-        const exercise = await prisma.exercise.create({
-            data: {
-                name,
-                description,
-                sets,
-                reps,
-                weight,
-                workouts: {
-                    connect: { id: workoutId },
-                },
-            },
-        });
-        res.status(201).json(exercise);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
-
-app.get('/exercises/:workoutId', verifyToken, async (req, res) => {
-    const workoutId = req.params.workoutId;
-
-    try {
-        const exercises = await prisma.exercise.findMany({
-            where: { workoutId },
-        });
-        res.json(exercises);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
 
 // --------------------------
 // UserSearch Endpoints
