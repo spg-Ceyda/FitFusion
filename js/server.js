@@ -194,12 +194,12 @@ app.get('/exercises/:workoutId', verifyToken, async (req, res) => {
 // --------------------------
 app.get('/searchUsers', verifyToken, async (req, res) => {
     const searchQuery = req.query.q || "";
-    console.log("Searching for:", searchQuery); // Debug-Log
+    const userId = req.user.id;
 
     try {
         const users = await prisma.user.findMany({
             where: {
-                NOT: { id: req.user.id },
+                NOT: { id: userId },
                 OR: [
                     { UserName: { contains: searchQuery, mode: "insensitive" } },
                     { Email: { contains: searchQuery, mode: "insensitive" } }
@@ -211,13 +211,13 @@ app.get('/searchUsers', verifyToken, async (req, res) => {
                 ProfilePicture: true
             }
         });
-        console.log("Search results:", users.length); // Debug-Log
         res.json(users);
     } catch (error) {
         console.error("Search error:", error);
-        res.status(500).json([]);
+        res.status(500).json({ error: "Serverfehler bei der Suche" });
     }
 });
+
 
 app.get('/me', verifyToken, async (req, res) => {
     try {
