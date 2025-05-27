@@ -103,40 +103,48 @@ app.get('/users', verifyToken, async (req, res) => {
 // UserSearch Endpoints
 // --------------------------
 app.get('/searchUsers', verifyToken, async (req, res) => {
-    const searchQuery = req.query.q || "";
-    const userId = req.user.id;
+    const query = req.query.q;
+    console.log("Suchanfrage:", query); // Debug-Log
+
+    if (!query || query.trim() === "") {
+        return res.status(400).json({ error: "Suchbegriff fehlt" });
+    }
 
     try {
         const users = await prisma.user.findMany({
             where: {
-                NOT: { id: userId },
-                OR: [
-                    { UserName: { contains: searchQuery, mode: "insensitive" } },
-                    { Email: { contains: searchQuery, mode: "insensitive" } }
-                ]
+                UserName: {
+                    contains: query,
+
+                },
             },
             select: {
                 id: true,
                 UserName: true,
-                ProfilePicture: true
-            }
+                ProfilePicture: true,
+            },
         });
+
         res.json(users);
     } catch (error) {
-        console.error("Search error:", error);
-        res.status(500).json({ error: "Serverfehler bei der Suche" });
+        console.error("Fehler bei /searchUsers:", error); // <--- wichtig
+        res.status(500).json({ error: "Fehler bei der Benutzersuche" });
     }
 });
 
-
 app.get('/me', verifyToken, async (req, res) => {
+    console.log("Token-Payload (req.user):", req.user); // 👈 NEU
+
     try {
         const user = await prisma.user.findUnique({
             where: { id: req.user.id },
             select: { id: true, UserName: true, ProfilePicture: true }
         });
 
-        if (!user) return res.status(404).json({ error: "Benutzer nicht gefunden." });
+        if (!user) {
+            console.warn("Kein User in DB für ID:", req.user.id); // 👈 NEU
+            return res.status(404).json({ error: "Benutzer nicht gefunden." });
+        }
 
         res.json(user);
     } catch (error) {
